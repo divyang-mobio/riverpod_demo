@@ -8,10 +8,10 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Stream<List<SafeTableData>> counter = ref.watch(counterProvider).getData();
+    Stream<List<DemoTableData>> counter = ref.watch(dataProvider).getData();
     return Scaffold(
       appBar: AppBar(title: const Text('RiverPod Demo')),
-      body: StreamBuilder<List<SafeTableData>>(
+      body: StreamBuilder<List<DemoTableData>>(
           stream: counter,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -19,14 +19,14 @@ class MyHomePage extends ConsumerWidget {
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) => GestureDetector(
                         onDoubleTap: () {
-                          ref.read(counterProvider.notifier).state.updateData(
-                              SafeTableData(
+                          ref.read(dataProvider.notifier).state.updateData(
+                              DemoTableData(
                                   id: snapshot.data?[index].id as int,
                                   name: "update"));
                         },
                         onTap: () {
-                          ref.read(counterProvider.notifier).state.deleteData(
-                              snapshot.data?[index] as SafeTableData);
+                          ref.read(dataProvider.notifier).state.deleteData(
+                              snapshot.data?[index] as DemoTableData);
                         },
                         child: ListTile(
                           title: Text((snapshot.data?[index].name).toString()),
@@ -39,9 +39,9 @@ class MyHomePage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             ref
-                .read(counterProvider.notifier)
+                .read(dataProvider.notifier)
                 .state
-                .insertData(const SafeTableData(name: "name"));
+                .insertData(const DemoTableData(name: "name"));
           },
           child: const Icon(Icons.add)),
     );

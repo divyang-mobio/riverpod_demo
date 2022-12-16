@@ -3,10 +3,10 @@
 part of 'local_database.dart';
 
 // ignore_for_file: type=lint
-class SafeTableData extends DataClass implements Insertable<SafeTableData> {
+class DemoTableData extends DataClass implements Insertable<DemoTableData> {
   final int? id;
   final String name;
-  const SafeTableData({this.id, required this.name});
+  const DemoTableData({this.id, required this.name});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -17,17 +17,17 @@ class SafeTableData extends DataClass implements Insertable<SafeTableData> {
     return map;
   }
 
-  SafeTableCompanion toCompanion(bool nullToAbsent) {
-    return SafeTableCompanion(
+  DemoTableCompanion toCompanion(bool nullToAbsent) {
+    return DemoTableCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: Value(name),
     );
   }
 
-  factory SafeTableData.fromJson(Map<String, dynamic> json,
+  factory DemoTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SafeTableData(
+    return DemoTableData(
       id: serializer.fromJson<int?>(json['id']),
       name: serializer.fromJson<String>(json['name']),
     );
@@ -41,15 +41,15 @@ class SafeTableData extends DataClass implements Insertable<SafeTableData> {
     };
   }
 
-  SafeTableData copyWith(
+  DemoTableData copyWith(
           {Value<int?> id = const Value.absent(), String? name}) =>
-      SafeTableData(
+      DemoTableData(
         id: id.present ? id.value : this.id,
         name: name ?? this.name,
       );
   @override
   String toString() {
-    return (StringBuffer('SafeTableData(')
+    return (StringBuffer('DemoTableData(')
           ..write('id: $id, ')
           ..write('name: $name')
           ..write(')'))
@@ -61,23 +61,23 @@ class SafeTableData extends DataClass implements Insertable<SafeTableData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SafeTableData &&
+      (other is DemoTableData &&
           other.id == this.id &&
           other.name == this.name);
 }
 
-class SafeTableCompanion extends UpdateCompanion<SafeTableData> {
+class DemoTableCompanion extends UpdateCompanion<DemoTableData> {
   final Value<int?> id;
   final Value<String> name;
-  const SafeTableCompanion({
+  const DemoTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
   });
-  SafeTableCompanion.insert({
+  DemoTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
   }) : name = Value(name);
-  static Insertable<SafeTableData> custom({
+  static Insertable<DemoTableData> custom({
     Expression<int>? id,
     Expression<String>? name,
   }) {
@@ -87,8 +87,8 @@ class SafeTableCompanion extends UpdateCompanion<SafeTableData> {
     });
   }
 
-  SafeTableCompanion copyWith({Value<int?>? id, Value<String>? name}) {
-    return SafeTableCompanion(
+  DemoTableCompanion copyWith({Value<int?>? id, Value<String>? name}) {
+    return DemoTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
     );
@@ -108,7 +108,7 @@ class SafeTableCompanion extends UpdateCompanion<SafeTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('SafeTableCompanion(')
+    return (StringBuffer('DemoTableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name')
           ..write(')'))
@@ -116,12 +116,12 @@ class SafeTableCompanion extends UpdateCompanion<SafeTableData> {
   }
 }
 
-class $SafeTableTable extends SafeTable
-    with TableInfo<$SafeTableTable, SafeTableData> {
+class $DemoTableTable extends DemoTable
+    with TableInfo<$DemoTableTable, DemoTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $SafeTableTable(this.attachedDatabase, [this._alias]);
+  $DemoTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -139,11 +139,11 @@ class $SafeTableTable extends SafeTable
   @override
   List<GeneratedColumn> get $columns => [id, name];
   @override
-  String get aliasedName => _alias ?? 'safe_table';
+  String get aliasedName => _alias ?? 'demo_table';
   @override
-  String get actualTableName => 'safe_table';
+  String get actualTableName => 'demo_table';
   @override
-  VerificationContext validateIntegrity(Insertable<SafeTableData> instance,
+  VerificationContext validateIntegrity(Insertable<DemoTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -162,9 +162,9 @@ class $SafeTableTable extends SafeTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  SafeTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  DemoTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SafeTableData(
+    return DemoTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id']),
       name: attachedDatabase.typeMapping
@@ -173,17 +173,17 @@ class $SafeTableTable extends SafeTable
   }
 
   @override
-  $SafeTableTable createAlias(String alias) {
-    return $SafeTableTable(attachedDatabase, alias);
+  $DemoTableTable createAlias(String alias) {
+    return $DemoTableTable(attachedDatabase, alias);
   }
 }
 
 abstract class _$MyDatabase extends GeneratedDatabase {
   _$MyDatabase(QueryExecutor e) : super(e);
-  late final $SafeTableTable safeTable = $SafeTableTable(this);
+  late final $DemoTableTable demoTable = $DemoTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [safeTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [demoTable];
 }
