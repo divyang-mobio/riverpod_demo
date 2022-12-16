@@ -18,16 +18,16 @@ class MyHomePage extends ConsumerWidget {
               return ListView.builder(
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) => GestureDetector(
-                        onDoubleTap: () {
-                          ref.read(dataProvider.notifier).state.updateData(
-                              DemoTableData(
-                                  id: snapshot.data?[index].id as int,
-                                  name: "update"));
-                        },
-                        onTap: () {
-                          ref.read(dataProvider.notifier).state.deleteData(
-                              snapshot.data?[index] as DemoTableData);
-                        },
+                        onDoubleTap: () => ref
+                            .read(dataProvider.notifier)
+                            .state
+                            .updateData(DemoTableData(
+                                id: snapshot.data?[index].id as int,
+                                name: "update")),
+                        onTap: () => ref
+                            .read(dataProvider.notifier)
+                            .state
+                            .deleteData(snapshot.data?[index] as DemoTableData),
                         child: ListTile(
                           title: Text((snapshot.data?[index].name).toString()),
                         ),
@@ -37,12 +37,10 @@ class MyHomePage extends ConsumerWidget {
             }
           }),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            ref
-                .read(dataProvider.notifier)
-                .state
-                .insertData(const DemoTableData(name: "name"));
-          },
+          onPressed: () => ref
+              .read(dataProvider.notifier)
+              .state
+              .insertData(const DemoTableData(name: "name")),
           child: const Icon(Icons.add)),
     );
   }
